@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1007115697078",
+    "project_id": "clothes-app-d6d56",
+    "storage_bucket": "clothes-app-d6d56.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007115697078:android:c91181cd61312e9ba09f17",
+        "android_client_info": {
+          "package_name": "com.varsel.clothes_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1007115697078-mqteqsioe6vkm8rsnea5qvcknj58qe1b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjK97nrkvbJbKJjAGDN_DAp3C0yDhZ1l8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1007115697078-mqteqsioe6vkm8rsnea5qvcknj58qe1b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
