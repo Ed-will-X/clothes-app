@@ -1,4 +1,5 @@
 import 'package:clothes_app/models/user/user_data.dart';
+import 'package:clothes_app/screens/user/merchant/become_meerchant_detail_form.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,11 @@ class User extends StatelessWidget {
           GestureDetector(
             onTap: () {
               print("you're now a seller");
-              Provider.of<UserData>(context, listen: false).becomeSeller();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BecomeMerchantDetailForm()));
+              // Provider.of<UserData>(context, listen: false).becomeSeller();
             },
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),

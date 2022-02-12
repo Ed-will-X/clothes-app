@@ -1,7 +1,9 @@
 import 'package:clothes_app/models/user/user_data.dart';
+import 'package:clothes_app/models/user/user_model.dart';
 import 'package:clothes_app/screens/authentication/widgets/custom_button.dart';
 import 'package:clothes_app/screens/navigation_panel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -43,10 +45,14 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   final _auth = FirebaseAuth.instance;
 
+  List<String> genders = ['male', 'female', 'other'];
+
   String firstname;
   String lastname;
   int phone;
   String address;
+  String gender;
+  String DOB;
 
   FirebaseUser loggedInUser;
 
@@ -68,6 +74,47 @@ class _BodyState extends State<Body> {
   void initState() {
     getCurrentUser();
     super.initState();
+  }
+
+  _pushDatePicker() {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.only(top: 20),
+          margin: EdgeInsets.only(top: 500),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(35),
+          ),
+          child: Column(
+            children: [
+              Text(
+                'Choose a BirthDate',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black.withOpacity(0.7),
+                ),
+              ),
+              Container(
+                height: 200,
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.date,
+                  initialDateTime: DateTime(2000, 1, 1),
+                  onDateTimeChanged: (newDate) {
+                    setState(() {
+                      // var dateTime = DateTime.parse(newDate);
+                      DOB = '${newDate.day}-${newDate.month}-${newDate.year}';
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -95,8 +142,9 @@ class _BodyState extends State<Body> {
               ),
             ),
             SizedBox(
-              height: 30,
+              height: 10,
             ),
+
             ///////////////////////////   F.O.R.M.S   /////////////////
             Column(
               children: [
@@ -108,9 +156,6 @@ class _BodyState extends State<Body> {
                   icon: Icon(Icons.person_outline),
                   placeholder: 'Enter your first name',
                 ),
-                SizedBox(
-                  height: 15,
-                ),
                 CustomInput(
                   isError: lastNameError,
                   onChanged: (value) {
@@ -118,9 +163,6 @@ class _BodyState extends State<Body> {
                   },
                   icon: Icon(Icons.person_outline),
                   placeholder: 'Enter your last name',
-                ),
-                SizedBox(
-                  height: 15,
                 ),
                 CustomInput(
                   isError: phoneError,
@@ -130,9 +172,6 @@ class _BodyState extends State<Body> {
                   icon: Icon(Icons.phone_android),
                   placeholder: 'Enter your phone number',
                   keyboardType: TextInputType.number,
-                ),
-                SizedBox(
-                  height: 15,
                 ),
                 CustomInput(
                   isError: addressError,
@@ -144,7 +183,83 @@ class _BodyState extends State<Body> {
                 ),
               ],
             ),
-            SizedBox(height: 280),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              decoration: BoxDecoration(
+                color: Color(0xFFF5F8FD),
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              child: DropdownButtonFormField<String>(
+                value: gender,
+                hint: Text(
+                  'Select gender',
+                ),
+                isExpanded: true,
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Theme.of(context).primaryColor),
+                  ),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    gender = value;
+                  });
+                },
+                onSaved: (value) {
+                  setState(() {
+                    gender = value;
+                  });
+                },
+                validator: (String value) {
+                  if (value.isEmpty) {
+                    return "can't be empty";
+                  } else {
+                    return null;
+                  }
+                },
+                items: Provider.of<User>(context, listen: false)
+                    .genders
+                    .map((String val) {
+                  return DropdownMenuItem(
+                    value: val,
+                    child: Text(
+                      val,
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+
+            GestureDetector(
+              onTap: () {
+                _pushDatePicker();
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 24),
+                margin: EdgeInsets.symmetric(horizontal: 24, vertical: 5),
+                decoration: BoxDecoration(
+                  color: Color(0xFFF5F8FD),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Tap to select date of birth',
+                      style: TextStyle(
+                          color: Colors.black.withOpacity(0.6), fontSize: 15),
+                    ),
+                    Icon(
+                      Icons.arrow_drop_down_sharp,
+                      color: Colors.black.withOpacity(0.6),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 30),
             CustomButton(
               icon: Icons.supervised_user_circle_sharp,
               text: 'Register',
@@ -155,6 +270,8 @@ class _BodyState extends State<Body> {
                   lastname: lastname,
                   phone: phone,
                   houseAddress: address,
+                  gender: gender,
+                  DOB: DOB,
                 );
                 Navigator.push(
                     context,

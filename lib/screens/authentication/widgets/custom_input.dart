@@ -25,7 +25,7 @@ class CustomInput extends StatelessWidget {
         borderRadius: BorderRadius.circular(30.0),
         border: isError ? Border.all(color: Colors.redAccent) : null,
       ),
-      margin: EdgeInsets.symmetric(horizontal: 24),
+      margin: EdgeInsets.symmetric(horizontal: 24, vertical: 7),
       padding: EdgeInsets.symmetric(horizontal: 24),
       child: Row(
         children: <Widget>[

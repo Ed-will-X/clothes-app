@@ -87,9 +87,6 @@ class _BodyState extends State<Body> {
                     icon: Icon(Icons.mail_outline_outlined),
                     placeholder: 'Enter your Email',
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
                   CustomInput(
                     onChanged: (value) {
                       password = value;

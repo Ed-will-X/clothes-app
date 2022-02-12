@@ -22,7 +22,7 @@ class ClothesData extends ChangeNotifier {
   double rating;
   List reviews;
   List sales;
-  String dateAdded;
+  String arrivalDate;
   String seller;
 
   createProduct(
@@ -49,7 +49,7 @@ class ClothesData extends ChangeNotifier {
         'rating': rating,
         'reviews': reviews,
         'sales': sales,
-        'date-added': dateAdded,
+        'date-added': arrivalDate,
         'seller': seller,
         'id': randomId(10, 'products'),
       });

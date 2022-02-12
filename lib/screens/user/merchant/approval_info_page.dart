@@ -1,11 +1,8 @@
-import 'package:clothes_app/models/user/user_data.dart';
 import 'package:clothes_app/screens/authentication/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../navigation_panel.dart';
-
-class SignInSuccess extends StatelessWidget {
+class ApprovalInfoPage extends StatelessWidget {
+  int popCount = 0;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -15,28 +12,23 @@ class SignInSuccess extends StatelessWidget {
           child: Container(
             child: Column(
               children: [
+                SizedBox(height: 20,),
                 Icon(
-                  Icons.check_circle,
+                  Icons.verified_user,
                   size: 300,
                   color: Theme.of(context).accentColor,
                 ),
                 SizedBox(height: 250),
                 Text(
-                  'Login Success',
+                  'Registration Success',
                   style: TextStyle(fontSize: 30),
                 ),
                 SizedBox(height: 70),
                 CustomButton(
-                  text: 'Go To Home',
-                  icon: Icons.home_outlined,
-                  onTap: () async {
-                    await Provider.of<UserData>(context, listen: false)
-                        .getUserDetails();
-
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => NavigationControl()));
+                  text: 'Go To User Page',
+                  icon: Icons.person_outline,
+                  onTap: () {
+                    Navigator.of(context).popUntil((_) => popCount++ >= 2);
                   },
                 )
               ],

@@ -1,5 +1,4 @@
 import 'package:clothes_app/screens/cart/widgets/cart_item.dart';
-import 'package:clothes_app/screens/cart/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 
 class Cart extends StatefulWidget {
@@ -11,9 +10,27 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Theme.of(context).backgroundColor,
+        elevation: 0.0,
+        iconTheme: IconThemeData(color: Colors.grey),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text(
+          'Cart',
+          style: TextStyle(color: Colors.grey),
+        ),
+      ),
       body: Column(
         children: [
-          TopBar(),
+          SizedBox(
+            height: 10,
+          ),
           CartItems(),
           Footer(),
         ],
@@ -31,7 +48,7 @@ class _CartItemsState extends State<CartItems> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 650,
+      height: 640,
       child: ListView.separated(
         separatorBuilder: (BuildContext context, int index) => Divider(),
         itemCount: 10,
@@ -54,7 +71,10 @@ class _FooterState extends State<Footer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+      padding: EdgeInsets.symmetric(
+        horizontal: 25,
+      ),
+      // margin: EdgeInsets.only(top: 50),
       child: Row(
         children: [
           Column(
@@ -104,7 +124,7 @@ class _FooterState extends State<Footer> {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

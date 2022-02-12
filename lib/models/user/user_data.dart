@@ -15,12 +15,21 @@ class UserData extends ChangeNotifier {
   String gender;
   List cart;
   List pendingOrders;
+  List ordersToShip;
   List favorites;
-  bool isSeller = false;
+  bool isMerchant;
   List advertisedProducts;
   String companyAddress;
-  String joinDate;
+  String companyName;
   String userID;
+  String DOB;
+  bool isVerified = false;
+  String companyLogo;
+
+  getCurrentDate() {
+    final currentTime = DateTime.now();
+    return '${currentTime.year}-${currentTime.month}-${currentTime.day}-${currentTime.hour}-${currentTime.minute}';
+  }
 
   signUp(email, password) async {
     try {
@@ -52,44 +61,37 @@ class UserData extends ChangeNotifier {
     _auth.signOut();
   }
 
-  completeProfile({email, firstname, lastname, phone, houseAddress}) {
+  completeProfile(
+      {email, firstname, lastname, phone, houseAddress, gender, DOB}) {
     final ref = _firestore.collection('users').document();
-    ref.setData({
-      'email': email,
-      'first-name': firstname,
-      'last-name': lastname,
-      'phone-number': phone,
-      'house-address': houseAddress,
-      'cart': cart,
-      'gender': gender,
-      'cart': cart,
-      'pending-orders': pendingOrders,
-      'favorites': favorites,
-      'isSeller': isSeller,
-      'advertised-products': advertisedProducts,
-      'join-date': joinDate,
-      'id': ref.documentID,
-    });
-    // try {
-    //   _firestore.collection('users').add({
-    //     'email': email,
-    //     'first-name': firstname,
-    //     'last-name': lastname,
-    //     'phone-number': phone,
-    //     'house-address': houseAddress,
-    //     'cart': cart,
-    //     'gender': gender,
-    //     'cart': cart,
-    //     'pending-orders': pendingOrders,
-    //     'favorites': favorites,
-    //     'isSeller': isSeller,
-    //     'advertised-products': advertisedProducts,
-    //     'join-date': joinDate,
-    //     'id': ref.documentID,
-    //   });
-    // } catch (e) {
-    //   print(e);
-    // }
+    this.email = email;
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.phone = phone;
+    this.houseAddress = houseAddress;
+    this.gender = gender;
+    this.DOB = DOB;
+
+    try {
+      ref.setData({
+        'email': email,
+        'first-name': firstname,
+        'last-name': lastname,
+        'phone-number': phone,
+        'house-address': houseAddress,
+        'cart': this.cart,
+        'gender': gender,
+        'cart': this.cart,
+        'pending-orders': this.pendingOrders,
+        'favorites': this.favorites,
+        'isMerchant': false,
+        'join-date': this.getCurrentDate(),
+        'id': ref.documentID,
+        'date-of-birth': DOB
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   getCurrentUser() async {
@@ -107,25 +109,36 @@ class UserData extends ChangeNotifier {
         .where('email', isEqualTo: email)
         .snapshots()
         .listen((data) {
-      firstname = data.documents[0]['first-name'];
-      lastname = data.documents[0]['last-name'];
-      phone = data.documents[0]['phone-number'];
-      cart = data.documents[0]['cart'];
-      favorites = data.documents[0]['favorites'];
-      isSeller = data.documents[0]['isSeller'];
-      advertisedProducts = data.documents[0]['advertised-products'];
-      houseAddress = data.documents[0]['house-address'];
-      userID = data.documents[0].documentID;
+      this.firstname = data.documents[0]['first-name'];
+      this.lastname = data.documents[0]['last-name'];
+      this.phone = data.documents[0]['phone-number'];
+      this.cart = data.documents[0]['cart'];
+      this.favorites = data.documents[0]['favorites'];
+      this.isMerchant = data.documents[0]['isMerchant'];
+      this.advertisedProducts = data.documents[0]['advertised-products'];
+      this.houseAddress = data.documents[0]['house-address'];
+      this.userID = data.documents[0].documentID;
+      this.gender = data.documents[0]['gender'];
+      this.DOB = data.documents[0]['date-of-birth'];
+      this.companyName = data.documents[0]['company-name'];
+      this.companyName = data.documents[0]['company-address'];
     });
   }
 
-  becomeSeller() async {
+  becomeSeller({companyName, companyAddress}) async {
     // getting the document ID
+    final ref = _firestore.collection('users').document(userID);
 
     // modifying the database based on the document ID
-    await _firestore
-        .collection('users')
-        .document(userID)
-        .updateData({'isSeller': true});
+    await _firestore.collection('users').document(userID).updateData({
+      'isMerchant': true,
+      'orders-to-ship': this.ordersToShip,
+      'company-name': companyName,
+      'company-address': companyAddress,
+      'isVerified': this.isVerified,
+      'advertised-products': this.advertisedProducts,
+      'become-merchant-date': this.getCurrentDate(),
+      'company-logo': this.companyLogo,
+    });
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'models/user/user_data.dart';
+import 'models/user/user_model.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<UserData>.value(
           value: UserData(),
+        ),
+        ChangeNotifierProvider<User>.value(
+          value: User(),
         )
       ],
       child: MaterialApp(
