@@ -132,6 +132,9 @@ class _BodyState extends State<Body> {
                       await Provider.of<UserData>(context, listen: false)
                           .signIn(email, password);
                   if (user != null) {
+                    await Provider.of<UserData>(context, listen: false)
+                        .getUserDetails();
+
                     Navigator.push(
                         context,
                         MaterialPageRoute(

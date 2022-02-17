@@ -8,6 +8,7 @@ class CustomInput extends StatelessWidget {
     this.keyboardType,
     this.obscureText = false,
     this.isError = false,
+    this.controller,
   });
 
   Icon icon;
@@ -16,6 +17,7 @@ class CustomInput extends StatelessWidget {
   bool obscureText;
   Function onChanged;
   bool isError;
+  TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class CustomInput extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: TextField(
+              controller: controller,
               onChanged: onChanged,
               obscureText: obscureText,
               keyboardType: keyboardType,

@@ -19,7 +19,7 @@
 . animate DOB selector
 . store props to to internal storage
 
-. image selector for select company logo
+. image parsing logic for select company logo
 . modify appbar of the cart page
 
 
@@ -52,13 +52,11 @@
 . search page
 . implement carousel slider on the home page
 
-. new arrival page
-. popular sales page
 . for you page
 
 . add products page
+. manage products page
 . merchant analytics page
-. Edit Profile Page
 
 
 

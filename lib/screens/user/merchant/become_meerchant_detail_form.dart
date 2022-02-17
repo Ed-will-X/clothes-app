@@ -103,7 +103,7 @@ class _BodyState extends State<Body> {
 
                 try {
                   await Provider.of<UserData>(context, listen: false)
-                      .becomeSeller(
+                      .becomeMerchant(
                           companyName: companyName,
                           companyAddress: companyAddress);
                   Navigator.push(

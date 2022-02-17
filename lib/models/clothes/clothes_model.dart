@@ -1,6 +1,8 @@
-class Clothes {
+import 'package:flutter/foundation.dart';
+
+class Clothes extends ChangeNotifier {
   var title;
-  var subtitle;
+  var category;
   var price;
   var imgUrl;
   var detailUrl;
@@ -11,7 +13,7 @@ class Clothes {
 
   Clothes(
       {title,
-      subtitle,
+      category,
       price,
       imgUrl,
       detailUrl,
@@ -20,7 +22,7 @@ class Clothes {
       description,
       sizeList}) {
     this.title = title;
-    this.subtitle = subtitle;
+    this.category = category;
     this.price = price;
     this.imgUrl = imgUrl;
     this.detailUrl = detailUrl;

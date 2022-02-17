@@ -42,15 +42,15 @@ class _NavigationControlState extends State<NavigationControl> {
               icon: Icon(Icons.home_outlined),
             ),
             BottomNavigationBarItem(
-              label: 'home',
+              label: 'categories',
               icon: Icon(Icons.category_outlined),
             ),
             BottomNavigationBarItem(
-              label: 'home',
+              label: 'favorites',
               icon: Icon(Icons.favorite_outline),
             ),
             BottomNavigationBarItem(
-              label: 'home',
+              label: 'user',
               icon: Icon(Icons.person_outline),
             ),
           ],

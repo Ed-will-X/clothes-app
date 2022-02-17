@@ -1,5 +1,6 @@
 import 'package:clothes_app/models/clothes/clothes_data.dart';
 import 'package:clothes_app/screens/home/widgets/sub_widgets/categories_link.dart';
+import 'package:clothes_app/screens/products/popular_sales/popular_sales_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +18,13 @@ class _PopularSalesState extends State<PopularSales> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CategoriesLink(title: 'Popular Sales'),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PopularSalesPage()));
+            },
+            child: CategoriesLink(title: 'Popular Sales'),
+          ),
           Card(
             margin: EdgeInsets.symmetric(horizontal: 25),
             shape: RoundedRectangleBorder(
@@ -45,7 +52,7 @@ class _PopularSalesState extends State<PopularSales> {
                             ),
                           ),
                           Text(
-                            clothes[1].subtitle,
+                            clothes[1].category,
                             style: TextStyle(
                               color: Colors.grey,
                               height: 1.5,

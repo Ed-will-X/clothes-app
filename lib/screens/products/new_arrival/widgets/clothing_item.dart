@@ -1,51 +1,47 @@
 import 'package:clothes_app/screens/details/detail.dart';
 import 'package:flutter/material.dart';
 
-class ClothesItem extends StatefulWidget {
-  var clothes;
-  ClothesItem(clothes) {
-    this.clothes = clothes;
-  }
-
+class ClothingItem extends StatefulWidget {
   @override
-  _ClothesItemState createState() => _ClothesItemState();
+  _ClothingItemState createState() => _ClothingItemState();
+
+  var cloth;
+
+  ClothingItem({@required this.cloth});
 }
 
-class _ClothesItemState extends State<ClothesItem> {
+class _ClothingItemState extends State<ClothingItem> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: GestureDetector(
+    return GestureDetector(
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => DetailPage(widget.clothes)));
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailPage(widget.cloth),
+          ),
+        );
       },
       child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Stack(
               children: [
                 Container(
-                  margin: EdgeInsets.all(8),
-                  height: 170,
-                  width: 200,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
+                    // color: Colors.black,
+                    borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
-                      image: AssetImage(widget.clothes.imgUrl),
+                      image: AssetImage(widget.cloth.imgUrl),
                       fit: BoxFit.fitHeight,
                     ),
                   ),
+                  height: 190,
                 ),
                 Positioned(
                   top: 15,
-                  right: 15,
+                  right: 10,
                   child: Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
@@ -60,30 +56,31 @@ class _ClothesItemState extends State<ClothesItem> {
               ],
             ),
             Text(
-              widget.clothes.title,
+              widget.cloth.title.length < 15
+                  ? widget.cloth.title
+                  : '${widget.cloth.title.substring(0, 15)} ...',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 height: 1.5,
               ),
             ),
             Text(
-              widget.clothes.category,
+              widget.cloth.category,
               style: TextStyle(
-                height: 1.5,
                 color: Colors.grey,
+                height: 1.5,
               ),
             ),
             Text(
-              widget.clothes.price,
+              widget.cloth.price.toString(),
               style: TextStyle(
-                fontWeight: FontWeight.bold,
-                height: 1.5,
                 color: Theme.of(context).primaryColor,
+                height: 1.5,
               ),
-            ),
+            )
           ],
         ),
       ),
-    ));
+    );
   }
 }

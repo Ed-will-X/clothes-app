@@ -1,45 +1,38 @@
 import 'package:clothes_app/models/user/user_data.dart';
 import 'package:clothes_app/models/user/user_model.dart';
 import 'package:clothes_app/screens/authentication/widgets/custom_button.dart';
-import 'package:clothes_app/screens/navigation_panel.dart';
+import 'package:clothes_app/screens/authentication/widgets/custom_input.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/custom_input.dart';
-
-allWordsCapitalize(String str) {
-  return str.toLowerCase().split(' ').map((word) {
-    String leftText = (word.length > 1) ? word.substring(1, word.length) : '';
-    return word[0].toUpperCase() + leftText;
-  }).join(' ');
-}
-
-class CompleteProfile extends StatefulWidget {
+class EditProfile extends StatefulWidget {
   @override
-  _CompleteProfileState createState() => _CompleteProfileState();
+  _EditProfileState createState() => _EditProfileState();
 }
 
-class _CompleteProfileState extends State<CompleteProfile> {
+class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Theme.of(context).backgroundColor,
-          elevation: 0.0,
-          iconTheme: IconThemeData(color: Colors.grey),
-          automaticallyImplyLeading: false,
-          title: Text(
-            'Sign Up',
-            style: TextStyle(color: Colors.grey),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Theme.of(context).backgroundColor,
+        elevation: 0.0,
+        iconTheme: IconThemeData(color: Colors.grey),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-        body: Body(),
+        title: Text(
+          'Edit Profile',
+          style: TextStyle(color: Colors.grey),
+        ),
       ),
+      body: Body(),
     );
   }
 }
@@ -53,11 +46,16 @@ class _BodyState extends State<Body> {
   final _auth = FirebaseAuth.instance;
 
   List<String> genders = ['male', 'female', 'other'];
+  String firstnameInitial = 'initial value';
 
-  String firstname;
-  String lastname;
-  int phone;
-  String address;
+  // TextEditingController firstnameController =
+  //     TextEditingController(text: 'initial value');
+  // TextEditingController lastnameController =
+  //     TextEditingController(text: 'initial value');
+  // TextEditingController phoneController =
+  //     TextEditingController(text: 'initial value');
+  // TextEditingController addressController =
+  //     TextEditingController(text: 'initial value');
   String gender;
   String DOB;
 
@@ -83,7 +81,7 @@ class _BodyState extends State<Body> {
     super.initState();
   }
 
-  _pushDatePicker() {
+  _pushDatePicker(DateTime initialDate) {
     return showDialog<void>(
       context: context,
       barrierDismissible: true, // user must tap button!
@@ -98,7 +96,7 @@ class _BodyState extends State<Body> {
           child: Column(
             children: [
               Text(
-                'Choose a Birth Date',
+                'Edit BirthDate',
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.black.withOpacity(0.7),
@@ -108,10 +106,11 @@ class _BodyState extends State<Body> {
                 height: 200,
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.date,
-                  initialDateTime: DateTime(2000, 1, 1),
+                  initialDateTime: initialDate,
                   onDateTimeChanged: (newDate) {
                     setState(() {
-                      DOB = newDate.toString();
+                      // var dateTime = DateTime.parse(newDate);
+                      DOB = '${newDate.year}-${newDate.month}-${newDate.day}';
                     });
                   },
                 ),
@@ -125,6 +124,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    print(Provider.of<UserData>(context).DOB);
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
@@ -133,7 +133,7 @@ class _BodyState extends State<Body> {
               height: 40,
             ),
             Text(
-              'Complete Profile',
+              'Edit Profile',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
             ),
             SizedBox(
@@ -156,34 +156,38 @@ class _BodyState extends State<Body> {
               children: [
                 CustomInput(
                   isError: firstNameError,
-                  onChanged: (value) {
-                    firstname = value;
-                  },
+                  controller: TextEditingController(
+                      text: Provider.of<UserData>(context).firstname != null
+                          ? Provider.of<UserData>(context).firstname
+                          : ''),
                   icon: Icon(Icons.person_outline),
                   placeholder: 'Enter your first name',
                 ),
                 CustomInput(
                   isError: lastNameError,
-                  onChanged: (value) {
-                    lastname = value;
-                  },
+                  controller: TextEditingController(
+                      text: Provider.of<UserData>(context).lastname != null
+                          ? Provider.of<UserData>(context).lastname
+                          : ''),
                   icon: Icon(Icons.person_outline),
                   placeholder: 'Enter your last name',
                 ),
                 CustomInput(
                   isError: phoneError,
-                  onChanged: (value) {
-                    phone = int.parse(value);
-                  },
+                  controller: TextEditingController(
+                      text: Provider.of<UserData>(context).phone != null
+                          ? Provider.of<UserData>(context).phone.toString()
+                          : ''),
                   icon: Icon(Icons.phone_android),
                   placeholder: 'Enter your phone number',
                   keyboardType: TextInputType.number,
                 ),
                 CustomInput(
                   isError: addressError,
-                  onChanged: (value) {
-                    address = value;
-                  },
+                  controller: TextEditingController(
+                      text: Provider.of<UserData>(context).houseAddress != null
+                          ? Provider.of<UserData>(context).houseAddress
+                          : ''),
                   icon: Icon(Icons.home_outlined),
                   placeholder: 'Enter your house address',
                 ),
@@ -237,10 +241,10 @@ class _BodyState extends State<Body> {
                 }).toList(),
               ),
             ),
-
             GestureDetector(
               onTap: () {
-                _pushDatePicker();
+                _pushDatePicker(DateTime.parse(
+                    Provider.of<UserData>(context, listen: false).DOB));
               },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 24),
@@ -253,7 +257,7 @@ class _BodyState extends State<Body> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Tap to select date of birth',
+                      'Tap to edit date of birth',
                       style: TextStyle(
                           color: Colors.black.withOpacity(0.6), fontSize: 15),
                     ),
@@ -269,24 +273,21 @@ class _BodyState extends State<Body> {
             CustomButton(
               icon: Icons.supervised_user_circle_sharp,
               text: 'Register',
-              onTap: () {
-                Provider.of<UserData>(context, listen: false).completeProfile(
-                  email: loggedInUser.email,
-                  firstname:
-                      firstname != null ? allWordsCapitalize(firstname) : '',
-                  lastname:
-                      lastname != null ? allWordsCapitalize(lastname) : '',
-                  phone: phone,
-                  houseAddress:
-                      address != null ? allWordsCapitalize(address) : '',
-                  gender: gender,
-                  DOB: DOB,
-                );
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => NavigationControl()));
-              },
+              // onTap: () {
+              //   Provider.of<UserData>(context, listen: false).completeProfile(
+              //     email: loggedInUser.email,
+              //     firstname: firstname,
+              //     lastname: lastname,
+              //     phone: phone,
+              //     houseAddress: address,
+              //     gender: gender,
+              //     DOB: DOB,
+              //   );
+              //   Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (context) => NavigationControl()));
+              // },
             ),
           ],
         ),

@@ -42,7 +42,7 @@ class _ClothesInfoState extends State<ClothesInfo> {
           ),
           ////////////////////////  subtitle
           Text(
-            ' ${widget.clothes.subtitle}',
+            ' ${widget.clothes.category}',
             style: TextStyle(
                 color: Colors.grey, fontSize: 15, fontWeight: FontWeight.bold),
           ),

@@ -1,4 +1,3 @@
-import 'package:clothes_app/utilities/helper_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -12,7 +11,7 @@ class ClothesData extends ChangeNotifier {
   String title;
   String gender;
   List colors;
-  String clothingType;
+  String category;
   int price;
   String coverImage;
   List images;
@@ -25,10 +24,38 @@ class ClothesData extends ChangeNotifier {
   String arrivalDate;
   String seller;
 
+  List<String> categories = [
+    'hoodie',
+    'jacket',
+    'raincoat',
+    'T-shirt',
+    'underwear',
+    'shirt',
+    'dress',
+    'skirt',
+    'bikinis'
+  ];
+
+  filterProducts(addFrom, addTo, categories, value) {
+    // repo.generateNewArrival()  - addFrom
+    // repo.categories  - categories
+    // widget._selected - value
+    // repo.newArrivalArray - addTo
+
+    for (var i = 0; i < addFrom.length; i++) {
+      addFrom[i].category.toLowerCase() == categories[value]
+          ? addTo.add(addFrom[i])
+          : null;
+      // print(repo.generateNewArrival()[i].category);
+      // print(repo.categories[widget._selected]);
+    }
+    // notifyListeners();
+  }
+
   createProduct(
       {title,
       gender,
-      clothingType,
+      category,
       colors,
       price,
       coverImage,
@@ -39,7 +66,7 @@ class ClothesData extends ChangeNotifier {
       _firestore.collection('clothes').add({
         'title': title,
         'gender': gender,
-        'clothing-type': clothingType,
+        'category': category,
         'colors': colors,
         'price': price,
         'image': coverImage,
@@ -51,7 +78,6 @@ class ClothesData extends ChangeNotifier {
         'sales': sales,
         'date-added': arrivalDate,
         'seller': seller,
-        'id': randomId(10, 'products'),
       });
     } catch (e) {
       print(e);
@@ -62,7 +88,7 @@ class ClothesData extends ChangeNotifier {
     return [
       Clothes(
           title: 'Gucci Oversized Hoodie',
-          subtitle: 'Hoodie',
+          category: 'Hoodie',
           price: '\$79.99',
           rating: 4.5,
           reviewCount: '2.5k',
@@ -76,7 +102,7 @@ class ClothesData extends ChangeNotifier {
               'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit'),
       Clothes(
         title: "men's coat",
-        subtitle: 'Rain-Jacket',
+        category: 'Raincoat',
         price: "\$39.99",
         rating: 5.0,
         reviewCount: '1.5k',
@@ -88,7 +114,7 @@ class ClothesData extends ChangeNotifier {
       ),
       Clothes(
         title: "Yellow Jacket",
-        subtitle: 'Jackets',
+        category: 'Jacket',
         price: "\$99.99",
         rating: 4.9,
         reviewCount: '1.7k',
@@ -103,6 +129,62 @@ class ClothesData extends ChangeNotifier {
         description:
             'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit',
       ),
+      Clothes(
+          title: 'Gucci Oversized Hoodie',
+          category: 'Hoodie',
+          price: '\$79.99',
+          rating: 4.5,
+          reviewCount: '2.5k',
+          imgUrl: 'assets/images/arrival1.png',
+          sizeList: ['M', 'L', 'XL', 'XXL'],
+          detailUrl: [
+            'assets/images/arrival1.png',
+            'assets/images/detail2.png'
+          ],
+          description:
+              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit'),
+      Clothes(
+          title: 'Gucci Oversized Hoodie',
+          category: 'Hoodie',
+          price: '\$79.99',
+          rating: 4.5,
+          reviewCount: '2.5k',
+          imgUrl: 'assets/images/arrival1.png',
+          sizeList: ['M', 'L', 'XL', 'XXL'],
+          detailUrl: [
+            'assets/images/arrival1.png',
+            'assets/images/detail2.png'
+          ],
+          description:
+              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit'),
+      Clothes(
+          title: 'Gucci Oversized Hoodie',
+          category: 'Hoodie',
+          price: '\$79.99',
+          rating: 4.5,
+          reviewCount: '2.5k',
+          imgUrl: 'assets/images/arrival1.png',
+          sizeList: ['M', 'L', 'XL', 'XXL'],
+          detailUrl: [
+            'assets/images/arrival1.png',
+            'assets/images/detail2.png'
+          ],
+          description:
+              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit'),
+      Clothes(
+          title: 'Gucci Oversized Hoodie',
+          category: 'Hoodie',
+          price: '\$79.99',
+          rating: 4.5,
+          reviewCount: '2.5k',
+          imgUrl: 'assets/images/arrival1.png',
+          sizeList: ['M', 'L', 'XL', 'XXL'],
+          detailUrl: [
+            'assets/images/arrival1.png',
+            'assets/images/detail2.png'
+          ],
+          description:
+              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit'),
     ];
   }
 
@@ -110,7 +192,7 @@ class ClothesData extends ChangeNotifier {
     return [
       Clothes(
         title: "Yellow Jacket",
-        subtitle: 'Jackets',
+        category: 'Jacket',
         price: "\$99.99",
         rating: 4.5,
         reviewCount: '2.2k',
@@ -121,8 +203,50 @@ class ClothesData extends ChangeNotifier {
             'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit',
       ),
       Clothes(
+          title: 'Gucci Oversized Hoodie',
+          category: 'Hoodie',
+          price: '\$79.99',
+          rating: 4.5,
+          reviewCount: '2.5k',
+          imgUrl: 'assets/images/arrival1.png',
+          sizeList: ['M', 'L', 'XL', 'XXL'],
+          detailUrl: [
+            'assets/images/arrival1.png',
+            'assets/images/detail2.png'
+          ],
+          description:
+              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit'),
+      Clothes(
+          title: 'Gucci Oversized Hoodie',
+          category: 'Hoodie',
+          price: '\$79.99',
+          rating: 4.5,
+          reviewCount: '2.5k',
+          imgUrl: 'assets/images/arrival1.png',
+          sizeList: ['M', 'L', 'XL', 'XXL'],
+          detailUrl: [
+            'assets/images/arrival1.png',
+            'assets/images/detail2.png'
+          ],
+          description:
+              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit'),
+      Clothes(
+          title: 'Gucci Oversized Hoodie',
+          category: 'Hoodie',
+          price: '\$79.99',
+          rating: 4.5,
+          reviewCount: '2.5k',
+          imgUrl: 'assets/images/arrival1.png',
+          sizeList: ['M', 'L', 'XL', 'XXL'],
+          detailUrl: [
+            'assets/images/arrival1.png',
+            'assets/images/detail2.png'
+          ],
+          description:
+              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit'),
+      Clothes(
         title: "Yellow Jacket",
-        subtitle: 'Jackets',
+        category: 'Jacket',
         price: "\$99.99",
         rating: 4.3,
         reviewCount: '1.2k',

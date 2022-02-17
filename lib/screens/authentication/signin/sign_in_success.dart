@@ -1,7 +1,5 @@
-import 'package:clothes_app/models/user/user_data.dart';
 import 'package:clothes_app/screens/authentication/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../navigation_panel.dart';
 
@@ -29,10 +27,7 @@ class SignInSuccess extends StatelessWidget {
                 CustomButton(
                   text: 'Go To Home',
                   icon: Icons.home_outlined,
-                  onTap: () async {
-                    await Provider.of<UserData>(context, listen: false)
-                        .getUserDetails();
-
+                  onTap: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(

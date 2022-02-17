@@ -125,7 +125,7 @@ class UserData extends ChangeNotifier {
     });
   }
 
-  becomeSeller({companyName, companyAddress}) async {
+  becomeMerchant({companyName, companyAddress}) async {
     // getting the document ID
     final ref = _firestore.collection('users').document(userID);
 
