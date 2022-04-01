@@ -272,16 +272,10 @@ class _BodyState extends State<Body> {
             SizedBox(height: 30),
             CustomButton(
               icon: Icons.supervised_user_circle_sharp,
-              text: 'Register',
+              text: 'Update Profile',
               // onTap: () {
-              //   Provider.of<UserData>(context, listen: false).completeProfile(
-              //     email: loggedInUser.email,
-              //     firstname: firstname,
-              //     lastname: lastname,
-              //     phone: phone,
-              //     houseAddress: address,
-              //     gender: gender,
-              //     DOB: DOB,
+              //   Provider.of<UserData>(context, listen: false).updateProfile(
+              //
               //   );
               //   Navigator.push(
               //       context,

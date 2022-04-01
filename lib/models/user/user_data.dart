@@ -140,5 +140,22 @@ class UserData extends ChangeNotifier {
       'become-merchant-date': this.getCurrentDate(),
       'company-logo': this.companyLogo,
     });
+
+    // update local merchant state
+  }
+
+  updateProfile(firstname, lastname, phone, address, gender, DOB) async {
+    final ref = _firestore.collection('users').document(userID);
+
+    await _firestore.collection('users').document(userID).updateData({
+      'first-name': firstname,
+      'last-name': lastname,
+      'phone-number': phone,
+      'house-address': address,
+      'gender': gender,
+      'date-of-birth': DOB
+    });
+
+    // update local state
   }
 }

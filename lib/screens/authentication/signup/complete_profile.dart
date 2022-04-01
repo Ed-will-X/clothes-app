@@ -125,6 +125,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    print(DOB);
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(

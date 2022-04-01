@@ -71,6 +71,10 @@ class _UserState extends State<User> {
                   child: Text("Edit profile"),
                 ),
               ),
+              Container(
+                child: Text(
+                    'Merchant Status: ${Provider.of<UserData>(context).isMerchant}'),
+              ),
             ],
           ),
         ),

@@ -1,3 +1,23 @@
+------------bugs
+. fix cupertino slider
+
+
+
+
+. create firestore instance immedietely after signup
+. use server timestamp as date added and date uploaded
+. update database to use collections
+. update the document id to be the email
+. navigate back to welcome screen if there's no signed in user
+. alert errors
+. add drawer navigation
+. Add form validation
+. add local storage functionality using shared_preferences || hive
+    . logged in user
+    . products rendered
+    . user props until logout
+    . always route to homepage if there's a user
+. add splash screen
 . favorite feature
 . sign in slider
 . search feature
@@ -7,6 +27,7 @@
 . add truncation
 . add to cart feature
 . rating system
+. add splash screen
 
 . forgot password
 . incomplete profile
@@ -57,7 +78,7 @@
 . add products page
 . manage products page
 . merchant analytics page
-
+. delete account page
 
 
 
