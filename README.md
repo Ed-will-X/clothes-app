@@ -1,5 +1,24 @@
-# clothes_app
+# Clothes Ecommerce App
 
-My first Flutter ecommerce app
+**Project Status:** Abandoned ❌❌
 
-## Getting Started
+**Completion Status:** 20%
+
+## Overview
+
+- Just a basic e-commerce using Flutter and Firebase.
+
+## Images
+
+![1](/images/1.png)
+
+![2](/images/2.png)
+
+## Breakthroughs
+
+- Authentication ✅
+- Item Upload❌
+- Cart and Checkout ❌
+- Item Purchase❌
+- Edit User ❌
+- Paystack Integration ❌
